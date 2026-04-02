@@ -7,6 +7,7 @@ const config = {
   output: 'export',
   reactStrictMode: true,
   devIndicators: false,
+  images: { unoptimized: true },
   // Set NEXT_BASE_PATH env var when deploying to a GitHub Pages sub-path
   // e.g. NEXT_BASE_PATH=/REAREyeDocs for https://username.github.io/REAREyeDocs
   // Leave unset when using a custom domain (GitHub Pages or EdgeOne Pages)
