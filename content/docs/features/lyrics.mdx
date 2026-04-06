@@ -1,23 +1,25 @@
 ---
 title: 歌词显示
-description: 在背屏上显示音乐歌词，支持多种歌词提供器与显示模式
+description: 在背屏上显示音乐歌词，需要搭配主题组件与歌词提供器使用
 ---
 
 ## 功能概述
 
-REAREye 提供了增强的歌词显示功能，可以在小米 17 Pro / Pro Max 的背屏上实时显示当前播放音乐的歌词。
+REAREye 的歌词系统**不直接提供**背屏歌词显示功能，而是通过整合歌词数据源，让小米主题原有的歌词功能在背屏上复活。
 
-<Callout>
-  歌词功能需要配合音乐控件使用，请确保你的音乐应用已在「音乐控件白名单」中添加。
+### 工作原理
+
+```
+词幕插件 (Lyricon) / SuperLyric  →  获取歌词数据  →  REAREye 转接  →  主题组件显示歌词
+```
+
+1. **歌词提供器**（Lyricon 插件 / SuperLyric）负责从音乐应用获取歌词
+2. **REAREye** 作为中间层，支持切换和管理不同的歌词提供器
+3. **主题组件**（如背屏音乐主题）负责在背屏上实际渲染和显示歌词
+
+<Callout type="warn">
+  仅安装 REAREye 无法直接在背屏显示歌词。你还需要安装支持歌词显示的主题组件。
 </Callout>
-
-### 主要特性
-
-- 支持多种歌词显示模式：**原文**、**翻译**、**罗马音**
-- 支持多个歌词提供器切换：**Lyricon** 和 **SuperLyric**
-- 支持逐行歌词显示，可选择显示原文或翻译
-- 支持自定义音乐控件白名单，兼容更多第三方音乐应用
-- 支持强制刷新音乐控件状态
 
 ---
 
@@ -26,29 +28,45 @@ REAREye 提供了增强的歌词显示功能，可以在小米 17 Pro / Pro Max 
 使用歌词功能前，请确保：
 
 1. 已安装并激活 **REAREye** 模块（参考 [安装指南](/docs/basic/installation)）
-2. 设备已在 LSPosed 中正确配置作用域
-3. 已安装至少一个歌词提供器（**Lyricon** 或 **SuperLyric**）
+2. 已安装支持歌词显示的**背屏主题组件**（见下方说明）
+3. 已安装**歌词插件**（Lyricon 词幕插件或 SuperLyric）
+
+---
+
+## 背屏主题组件
+
+歌词的实际显示依赖于背屏主题组件。目前相关项目：
+
+| 项目 | 说明 | 状态 |
+| --- | --- | --- |
+| [Xiaomi-RearScreen-Music](https://github.com/SiberiaApp/Xiaomi-RearScreen-Music) | 背屏音乐主题组件 | ⚠️ 当前版本尚未适配 REAREye，请等待更新 |
+
+<Callout>
+  主题组件适配 REAREye 的版本正在开发中，请关注项目更新。适配完成后，配合 REAREye 的歌词提供器即可在背屏显示歌词。
+</Callout>
 
 ---
 
 ## 歌词提供器
 
-REAREye 通过歌词提供器获取歌词数据。目前支持两种提供器，你只需要安装其中一种即可使用歌词功能。
+REAREye 通过歌词提供器获取歌词数据。目前支持两种提供器。
 
-### Lyricon
+### Lyricon（词幕）
 
-Lyricon 是一个歌词提供器，为 REAREye 提供歌词数据源。
+Lyricon 是一个模块化的歌词系统，通过**插件**从不同的音乐应用获取歌词。REAREye 对接的是 Lyricon 的插件层。
 
 #### 安装
 
-1. 获取 Lyricon 的 APK 安装包（可通过 QQ 群或项目发布页获取）
-2. 在设备上安装 APK
-3. 在 **LSPosed** 管理器中启用 Lyricon 模块
-4. 确认作用域配置正确
+你只需要安装**词幕插件**，无需安装 Lyricon 主体：
+
+1. 从 [LyricProvider Releases](https://github.com/tomakino/LyricProvider/releases) 下载对应音乐应用的插件
+2. 在设备上安装插件 APK
+3. 在 **LSPosed** 管理器中启用插件模块
+4. 确认作用域包含目标音乐应用
 5. 重启设备或相关应用
 
-<Callout type="warn">
-  安装新的提供器后，建议重启 com.xiaomi.subscreencenter 以确保提供器被正确识别。
+<Callout>
+  Lyricon 插件按音乐应用分类，如网易云音乐、QQ 音乐等。根据你使用的音乐应用下载对应插件即可。
 </Callout>
 
 ### SuperLyric
@@ -57,14 +75,14 @@ SuperLyric 是另一个歌词提供器，同样为 REAREye 提供歌词数据。
 
 #### 安装
 
-1. 获取 SuperLyric 的 APK 安装包（可通过 QQ 群或项目发布页获取）
+1. 获取 SuperLyric 的 APK 安装包（可通过 QQ 群获取）
 2. 在设备上安装 APK
 3. 在 **LSPosed** 管理器中启用 SuperLyric 模块
 4. 确认作用域配置正确
 5. 重启设备或相关应用
 
 <Callout>
-  Lyricon 和 SuperLyric 可以同时安装，之后在 REAREye 设置中按需切换使用。
+  Lyricon 插件和 SuperLyric 可以同时安装，之后在 REAREye 设置中按需切换使用。
 </Callout>
 
 ---
@@ -77,7 +95,7 @@ SuperLyric 是另一个歌词提供器，同样为 REAREye 提供歌词数据。
 
 1. 打开 **REAREye** 应用
 2. 进入 **背屏中心** → **音乐控件白名单**
-3. 勾选你使用的音乐应用（如 QQ 音乐、网易云音乐、Spotify 等）
+3. 勾选你使用的音乐应用（如 QQ 音乐、网易云音乐等）
 4. 修改后建议重启 `com.xiaomi.subscreencenter`
 
 ### 强制刷新音乐控件状态
@@ -87,6 +105,8 @@ SuperLyric 是另一个歌词提供器，同样为 REAREye 提供歌词数据。
 ---
 
 ## 歌词显示模式
+
+当歌词系统正常工作后，可以在 REAREye 中配置显示模式：
 
 ### 原文
 
@@ -110,7 +130,7 @@ SuperLyric 是另一个歌词提供器，同样为 REAREye 提供歌词数据。
 
 ## 切换歌词提供器
 
-如果你同时安装了 Lyricon 和 SuperLyric，可以在 REAREye 中切换使用。
+如果你同时安装了 Lyricon 插件和 SuperLyric，可以在 REAREye 中切换使用。
 
 1. 打开 **REAREye** 应用
 2. 进入 **背屏中心** → **歌词提供器**
@@ -138,10 +158,11 @@ REAREye 支持逐行歌词显示模式，可以更精确地跟随播放进度。
 
 请检查以下几点：
 
-1. 音乐应用是否已添加到音乐控件白名单
-2. 是否安装并启用了至少一个歌词提供器（Lyricon 或 SuperLyric）
-3. LSPosed 中 REAREye 作用域是否包含 `com.xiaomi.subscreencenter`
-4. 尝试重启 `com.xiaomi.subscreencenter` 或重启设备
+1. 是否安装了支持歌词显示的**主题组件**
+2. 是否安装了**歌词插件**（Lyricon 插件或 SuperLyric）
+3. 音乐应用是否已添加到**音乐控件白名单**
+4. LSPosed 中 REAREye 作用域是否包含 `com.xiaomi.subscreencenter`
+5. 尝试重启 `com.xiaomi.subscreencenter` 或重启设备
 
 ### 歌词不同步或显示不完整？
 
@@ -149,10 +170,19 @@ REAREye 支持逐行歌词显示模式，可以更精确地跟随播放进度。
 2. 尝试切换不同的歌词提供器
 3. 部分歌曲可能暂无歌词数据，属于正常现象
 
-### 如何获取 Lyricon / SuperLyric？
+### Lyricon 插件和 Lyricon 主体有什么区别？
 
-可通过 REAREye QQ 群获取安装包和最新版本信息。也可关注项目 [GitHub Releases](https://github.com/killerprojecte/REAREye/releases) 了解相关更新。
+- **Lyricon（词幕）主体**：完整的状态栏歌词应用，独立于 REAREye 使用
+- **Lyricon 词幕插件**：仅为 REAREye 提供歌词数据，无需安装主体
+
+使用 REAREye 的歌词功能时，**只需安装插件**即可。
+
+### 如何获取更多帮助？
+
+- 关注 [Xiaomi-RearScreen-Music](https://github.com/SiberiaApp/Xiaomi-RearScreen-Music) 项目更新
+- 加入 REAREye QQ 群获取最新信息
+- 查看 [LyricProvider 仓库](https://github.com/tomakino/LyricProvider) 获取更多歌词插件
 
 <Callout type="warn">
-  歌词功能依赖歌词提供器和音乐应用的配合，不同应用和系统版本可能存在兼容性差异。
+  歌词功能依赖主题组件、歌词提供器和音乐应用的多方配合，不同应用和系统版本可能存在兼容性差异。
 </Callout>

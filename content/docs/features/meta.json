@@ -1,4 +1,12 @@
 {
   "title": "功能",
-  "pages": ["index", "lyrics"]
+  "pages": [
+    "index",
+    "component-manager",
+    "card-manager",
+    "wallpaper-manager",
+    "extra-settings",
+    "lyrics",
+    "video-wallpaper"
+  ]
 }
