@@ -2,9 +2,15 @@
   "contributors": [
     {
       "name": "AnserJim",
-      "description": "模块主要开发者",
+      "description": "模块核心开发者",
       "link": "https://github.com/killerprojecte",
       "avatar": "https://avatars.githubusercontent.com/u/81072191?v=4"
+    },
+    {
+      "name": "九磅九万便士",
+      "description": "组件开发者",
+      "link": "https://www.coolapk.com/u/22493508",
+      "avatar": "https://reareye.uwu.hk/avatars/SiberiaApp.jpeg"
     },
     {
       "name": "guocheng1378",
