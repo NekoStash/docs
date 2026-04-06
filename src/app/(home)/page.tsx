@@ -49,7 +49,7 @@ export default function HomePage() {
       {/* CTA Buttons */}
       <div className="flex flex-col sm:flex-row gap-4 items-center mb-16">
         <Link
-          href="/docs/basic"
+          href="/docs"
           className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-sm transition-all duration-200"
           style={{
             background: 'linear-gradient(135deg, #4b4e6d 0%, #3a3d5c 100%)',
