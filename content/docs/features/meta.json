@@ -2,7 +2,7 @@
   "title": "功能使用",
   "pages": [
     "index",
-    "component-manager",
+    "widget-manager",
     "card-manager",
     "wallpaper-manager",
     "extra-settings",
